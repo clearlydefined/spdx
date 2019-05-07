@@ -1,7 +1,7 @@
 'use strict'
 
-var spdx = require('./spdx')
+var parse = require('./spdx')
 
 module.exports = function (source) {
-  return spdx(source)
+  return parse(source)
 }

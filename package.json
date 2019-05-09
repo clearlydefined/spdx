@@ -7,10 +7,19 @@
     "type": "git",
     "url": "git+https://github.com/clearlydefined/spdx.git"
   },
+  "scripts": {
+    "test": "nyc mocha \"test.js\" && eslint ."
+  },
   "dependencies": {
     "spdx-expression-parse": "github:clearlydefined/spdx-expression-parse.js#fork",
     "spdx-license-ids": "^3.0.2",
     "spdx-license-list": "^5.0.0",
     "spdx-satisfies": "github:clearlydefined/spdx-satisfies.js#parse-override"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.0"
   }
 }

@@ -7,6 +7,14 @@
     "type": "git",
     "url": "git+https://github.com/clearlydefined/spdx.git"
   },
+  "main": "index.js",
+  "keywords": [
+    "spdx"
+  ],
+  "bugs": {
+    "url": "https://github.com/clearlydefined/spdx/issues"
+  },
+  "homepage": "https://github.com/clearlydefined/spdx",
   "scripts": {
     "test": "nyc mocha \"test.js\" && eslint ."
   },

@@ -171,6 +171,13 @@ describe('SPDX utility functions', () => {
     })
   })
 
+  it('will not drop NOASSERTION operands', () => {
+    expect(SPDX.merge('NOASSERTION', 'MIT', 'AND')).to.include('NOASSERTION')
+    expect(SPDX.merge('NOASSERTION', 'MIT', 'OR')).to.include('NOASSERTION')
+    expect(SPDX.merge('MIT', 'NOASSERTION', 'AND')).to.include('NOASSERTION')
+    expect(SPDX.merge('MIT', 'NOASSERTION', 'OR')).to.include('NOASSERTION')
+  })
+
   it('should expand expressions', () => {
     const data = [
       ['MIT', [['MIT']]],

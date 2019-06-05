@@ -133,9 +133,6 @@ function merge(proposed, base, mode = 'OR') {
   // ensure that missing values are ignored
   if (!base) return proposed
   if (!proposed) return base
-  // ensure that NOASSERTION is overwritten
-  if (base === 'NOASSERTION' || base.hasOwnProperty('noassertion')) return proposed
-  if (proposed === 'NOASSERTION' || proposed.hasOwnProperty('noassertion')) return base
 
   // OK, need to merge. Expand both to their normalized form of ORs of ANDs and insert any
   // unique proposed clauses

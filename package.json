@@ -1,6 +1,6 @@
 {
   "name": "@clearlydefined/spdx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SPDX custom libraries of clearlydefined.io.",
   "license": "MIT",
   "repository": {
@@ -27,7 +27,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
-    "mocha": "^6.1.4",
-    "nyc": "^14.1.0"
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1"
   }
 }

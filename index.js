@@ -5,6 +5,8 @@ const spdxExpressionParse = require('spdx-expression-parse')
 const spdxSatisfies = require('spdx-satisfies')
 const spdxLicenseList = require('spdx-license-list')
 const spdxLicenseSet = require('spdx-license-list/simple')
+spdxLicenseSet.add('OTHER') // OTHER is a valid license in Clearly Defined, not found in SPDX
+
 const lowerSpdxLicenseMap = new Map(Array.from(spdxLicenseSet).map(x => [x.toLowerCase(), x]))
 const lowerSpdxNameMap = new Map(Object.keys(spdxLicenseList).map(x => [spdxLicenseList[x].name.toLowerCase(), x]))
 const { isEqual, sortBy, union, uniqWith } = require('lodash')

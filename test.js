@@ -13,6 +13,7 @@ describe('SPDX utility functions', () => {
       ['MIT ', { license: 'MIT' }],
       [' MIT', { license: 'MIT' }],
       ['Other', { license: 'OTHER' }],
+      ['None', { license: 'NONE' }],
       ['MIT OR Apache-2.0', { left: { license: 'MIT' }, conjunction: 'or', right: { license: 'Apache-2.0' } }],
       ['MIT AND Apache-2.0', { left: { license: 'MIT' }, conjunction: 'and', right: { license: 'Apache-2.0' } }],
       [
@@ -204,6 +205,8 @@ describe('SPDX utility functions', () => {
       'GPL-1.0+': 'GPL-1.0+',
       'OTHER': 'OTHER',
       'other': 'OTHER',
+      'NONE': 'NONE',
+      'none': 'NONE',
       'Apache-2.0 WITH commons-clause': 'NOASSERTION',
       'NOASSERTION': 'NOASSERTION',
       'See license': 'NOASSERTION',

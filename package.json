@@ -1,6 +1,6 @@
 {
   "name": "@clearlydefined/spdx",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SPDX custom libraries of clearlydefined.io.",
   "license": "MIT",
   "repository": {

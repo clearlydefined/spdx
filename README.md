@@ -2,6 +2,8 @@
 
 ClearlyDefined focused SPDX utility library.
 
+This is used by [clearlydefined/service](https://github.com/clearlydefined/service)
+
 ## Install
 
 ```
@@ -28,3 +30,19 @@ cd spdx
 npm i
 npm test
 ```
+
+## Release
+* Merge pull request to this repo (make sure that it updates the version of this package - similar to [this pull request](https://github.com/clearlydefined/spdx/pull/12).)
+* Release the new package to npm (the npm login credentials are in the ClearlyDefined Azure keyvault, if you need access or help with this reach out to @nellshamrell)
+
+```
+cd spdx
+git checkout master
+git fetch origin
+git rebase origin/master
+npm login
+npm publish
+```
+
+* Update [clearlydefined/service](https://github.com/clearlydefined/service) to use the new version (similar to [this pull request](https://github.com/clearlydefined/service/pull/832))
+

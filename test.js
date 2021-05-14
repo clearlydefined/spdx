@@ -12,6 +12,7 @@ describe('SPDX utility functions', () => {
       ['mit', { license: 'MIT' }],
       ['MIT ', { license: 'MIT' }],
       [' MIT', { license: 'MIT' }],
+      ['PSF-2.0', { license: 'PSF-2.0' }],
       ['Other', { license: 'OTHER' }],
       ['None', { license: 'NONE' }],
       ['MIT OR Apache-2.0', { left: { license: 'MIT' }, conjunction: 'or', right: { license: 'Apache-2.0' } }],
@@ -60,14 +61,6 @@ describe('SPDX utility functions', () => {
       expect(SPDX.parse(input)).to.deep.equal(expected)
     })
   })
-
-  it('parses PSF-2.0', () => {
-    const data = new Map([
-      ['PSF-2.0', { license: 'PSF-2.0'}]
-    ])
-
-    expect(SPDX.parse('PSF-2.0')).to.deep.equal({license: 'PSF-2.0'})
-  }) 
 
   it('stringifies spdx objects', () => {
     const data = new Map([

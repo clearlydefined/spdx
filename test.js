@@ -61,6 +61,14 @@ describe('SPDX utility functions', () => {
     })
   })
 
+  it('parses PSF-2.0', () => {
+    const data = new Map([
+      ['PSF-2.0', { license: 'PSF-2.0'}]
+    ])
+
+    expect(SPDX.parse('PSF-2.0')).to.deep.equal({license: 'PSF-2.0'})
+  }) 
+
   it('stringifies spdx objects', () => {
     const data = new Map([
       [{ license: 'MIT' }, 'MIT'],

@@ -12,6 +12,7 @@ describe('SPDX utility functions', () => {
       ['mit', { license: 'MIT' }],
       ['MIT ', { license: 'MIT' }],
       [' MIT', { license: 'MIT' }],
+      ['PSF-2.0', { license: 'PSF-2.0' }],
       ['Other', { license: 'OTHER' }],
       ['None', { license: 'NONE' }],
       ['MIT OR Apache-2.0', { left: { license: 'MIT' }, conjunction: 'or', right: { license: 'Apache-2.0' } }],

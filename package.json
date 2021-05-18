@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "spdx-expression-parse": "github:clearlydefined/spdx-expression-parse.js#fork",
-    "spdx-license-ids": "^3.0.2",
+    "spdx-license-ids": "^3.0.7",
     "spdx-license-list": "^6.4.0",
     "spdx-satisfies": "github:clearlydefined/spdx-satisfies.js#parse-override"
   },

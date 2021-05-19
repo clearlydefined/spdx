@@ -41,8 +41,30 @@ function parse(expression, licenseVisitor) {
 function stringify(obj) {
   if (obj.hasOwnProperty('noassertion') || obj.exception === NOASSERTION) return NOASSERTION
   if (obj.license) return `${obj.license}${obj.plus ? '+' : ''}${obj.exception ? ` WITH ${obj.exception}` : ''}`
-  const left = obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
-  const right = obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
+  console.log("==============")
+  console.log(obj.left)
+  console.log("==============")
+  console.log("==============")
+  console.log(obj.right)
+  console.log("==============")
+  console.log("==============")
+  console.log("==============")
+  console.log(obj.left.conjunction)
+  const left = obj.left.conjunction === 'or' && obj.right.conjunction === 'and' ? `(${stringify(obj.left)})` : stringify(obj.left)
+//  const right = stringify(obj.right)
+//  if (obj.left.conjunction === 'or') {
+ //   let left = `(${stringify(obj.left)})`
+//  } else {
+ //   let left = stringify(obj.left)
+  //}
+//  const right = obj.right.conjunction === 'and' && obj.left.conjunction !== 'and' ? `(${stringify(obj.right)})` : stringify(obj.right)
+//  const right = obj.left.conjunction === 'and' ? `(${stringify(obj.right)})` : stringify(obj.right)
+  const right = obj.right.conjunction === 'and' && obj.left.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
+
+
+//  const left = obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
+//  const right = obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right) 
+
   return `${left} ${obj.conjunction.toUpperCase()} ${right}`
 }
 

@@ -85,7 +85,7 @@ describe('SPDX utility functions', () => {
           conjunction: 'or',
           right: { left: { license: 'BSD-2-Clause' }, conjunction: 'and', right: { license: 'GPL-2.0' } }
         },
-        'MIT OR (BSD-2-Clause AND GPL-2.0)'
+        'MIT OR BSD-2-Clause AND GPL-2.0'
       ],
       [
         {
@@ -97,7 +97,7 @@ describe('SPDX utility functions', () => {
             right: { left: { license: 'BSD-3-Clause' }, conjunction: 'and', right: { license: 'Unlicense' } }
           }
         },
-        'MIT OR BSD-2-Clause OR (BSD-3-Clause AND Unlicense)'
+        'MIT OR (BSD-2-Clause OR BSD-3-Clause AND Unlicense)'
       ],
       [
         {
@@ -113,7 +113,7 @@ describe('SPDX utility functions', () => {
             right: { license: 'Apache-2.0' }
           }
         },
-        'MIT AND BSD-3-Clause WITH GCC-exception-3.1 OR (CC-BY-4.0 AND Apache-2.0)'
+        'MIT AND BSD-3-Clause WITH GCC-exception-3.1 OR CC-BY-4.0 AND Apache-2.0'
       ],
       [
         {

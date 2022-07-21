@@ -1,6 +1,6 @@
 {
   "name": "@clearlydefined/spdx",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "SPDX custom libraries of clearlydefined.io.",
   "license": "MIT",
   "repository": {
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "spdx-expression-parse": "github:clearlydefined/spdx-expression-parse.js#fork",
-    "spdx-license-ids": "^3.0.7",
-    "spdx-license-list": "^6.4.0",
+    "spdx-license-ids": "^3.0.11",
+    "spdx-license-list": "^6.6.0",
     "spdx-satisfies": "github:clearlydefined/spdx-satisfies.js#parse-override"
   },
   "devDependencies": {

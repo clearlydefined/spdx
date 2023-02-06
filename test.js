@@ -219,6 +219,7 @@ describe('SPDX utility functions', () => {
       'mit OR Junk': 'MIT OR NOASSERTION',
       'Commercial AND Apache-2.0': 'NOASSERTION AND Apache-2.0',
       'Junk1 OR Junk 2': 'NOASSERTION',
+      'BSD-3-Clause-Modification': 'BSD-3-Clause-Modification',
       ' ': null,
       null: null
     }

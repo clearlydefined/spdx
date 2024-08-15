@@ -41,8 +41,8 @@ function parse(expression, licenseVisitor) {
 function stringify(obj) {
   if (obj.hasOwnProperty('noassertion') || obj.exception === NOASSERTION) return NOASSERTION
   if (obj.license) return `${obj.license}${obj.plus ? '+' : ''}${obj.exception ? ` WITH ${obj.exception}` : ''}`
-  const left = obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
-  const right = obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
+  const left = obj.conjunction === 'and' && obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
+  const right = obj.conjunction === 'and' && obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
   return `${left} ${obj.conjunction.toUpperCase()} ${right}`
 }
 

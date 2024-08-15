@@ -26,6 +26,14 @@ describe('SPDX utility functions', () => {
         }
       ],
       [
+        'MIT OR BSD-2-Clause AND GPL-2.0',
+        {
+          left: { license: 'MIT' },
+          conjunction: 'or',
+          right: { left: { license: 'BSD-2-Clause' }, conjunction: 'and', right: { license: 'GPL-2.0' } }
+        }
+      ],
+      [
         'MIT OR BSD-2-Clause OR (BSD-3-Clause AND Unlicense)',
         {
           left: { license: 'MIT' },
@@ -38,7 +46,35 @@ describe('SPDX utility functions', () => {
         }
       ],
       [
+        'MIT OR BSD-2-Clause OR BSD-3-Clause AND Unlicense',
+        {
+          left: { license: 'MIT' },
+          conjunction: 'or',
+          right: {
+            left: { license: 'BSD-2-Clause' },
+            conjunction: 'or',
+            right: { left: { license: 'BSD-3-Clause' }, conjunction: 'and', right: { license: 'Unlicense' } }
+          }
+        }
+      ],
+      [
         'MIT AND BSD-3-Clause WITH GCC-exception-3.1 OR (CC-BY-4.0 AND Apache-2.0)',
+        {
+          left: {
+            left: { license: 'MIT' },
+            conjunction: 'and',
+            right: { license: 'BSD-3-Clause', exception: 'GCC-exception-3.1' }
+          },
+          conjunction: 'or',
+          right: {
+            left: { license: 'CC-BY-4.0' },
+            conjunction: 'and',
+            right: { license: 'Apache-2.0' }
+          }
+        }
+      ],
+      [
+        'MIT AND BSD-3-Clause WITH GCC-exception-3.1 OR CC-BY-4.0 AND Apache-2.0',
         {
           left: {
             left: { license: 'MIT' },
@@ -85,7 +121,55 @@ describe('SPDX utility functions', () => {
             right: { left: { license: 'BSD-3-Clause' }, conjunction: 'and', right: { license: 'Unlicense' } }
           }
         },
-        'MIT OR (BSD-2-Clause OR BSD-3-Clause AND Unlicense)'
+        'MIT OR BSD-2-Clause OR BSD-3-Clause AND Unlicense'
+      ],
+      [
+        {
+          left: { license: 'MIT' },
+          conjunction: 'or',
+          right: {
+            left: { license: 'BSD-2-Clause' },
+            conjunction: 'or',
+            right: { license: 'BSD-3-Clause' }
+          }
+        },
+        'MIT OR BSD-2-Clause OR BSD-3-Clause'
+      ],
+      [
+        {
+          left: { license: 'MIT' },
+          conjunction: 'and',
+          right: {
+            left: { license: 'BSD-2-Clause' },
+            conjunction: 'or',
+            right: { license: 'BSD-3-Clause' }
+          }
+        },
+        'MIT AND (BSD-2-Clause OR BSD-3-Clause)'
+      ],
+      [
+        {
+          left: {
+            left: { license: 'BSD-2-Clause' },
+            conjunction: 'or',
+            right: { license: 'BSD-3-Clause' }
+          },
+          conjunction: 'and',
+          right: { license: 'MIT' },
+        },
+        '(BSD-2-Clause OR BSD-3-Clause) AND MIT'
+      ],
+      [
+        {
+          left: { license: 'MIT' },
+          conjunction: 'and',
+          right: {
+            left: { license: 'BSD-2-Clause' },
+            conjunction: 'and',
+            right: { license: 'BSD-3-Clause' }
+          }
+        },
+        'MIT AND BSD-2-Clause AND BSD-3-Clause'
       ],
       [
         {
@@ -179,6 +263,7 @@ describe('SPDX utility functions', () => {
       ['MIT', [['MIT']]],
       ['MIT AND GPL-3.0', [['GPL-3.0', 'MIT']]],
       ['MIT OR GPL-3.0', [['MIT'], ['GPL-3.0']]],
+      ['MIT OR BSD-2-Clause OR BSD-3-Clause', [['MIT'], ['BSD-2-Clause'], ['BSD-3-Clause']]],
       ['MIT AND (GPL-3.0 OR BSD-3-Clause)', [['GPL-3.0', 'MIT'], ['BSD-3-Clause', 'MIT']]],
       ['(MIT OR GPL-3.0) AND ISC', [['ISC', 'MIT'], ['GPL-3.0', 'ISC']]]
     ]
@@ -215,6 +300,9 @@ describe('SPDX utility functions', () => {
       'MIT AND LGPL-2.1+ AND BSD-3-Clause': 'MIT AND LGPL-2.1+ AND BSD-3-Clause',
       '(MIT AND BSD-3-Clause WITH GCC-exception-3.1) OR (CC-BY-4.0 AND Apache-2.0)': 'MIT AND BSD-3-Clause WITH GCC-exception-3.1 OR CC-BY-4.0 AND Apache-2.0',
       'MIT AND BSD-3-Clause AND CC-BY-4.0': 'MIT AND BSD-3-Clause AND CC-BY-4.0',
+      'MIT AND (BSD-2-Clause OR BSD-3-Clause)': 'MIT AND (BSD-2-Clause OR BSD-3-Clause)',
+      'LGPL-2.1-only OR MIT OR BSD-3-Clause': 'LGPL-2.1-only OR MIT OR BSD-3-Clause',
+      'LGPL-2.1-only OR BSD-3-Clause AND MIT': 'LGPL-2.1-only OR BSD-3-Clause AND MIT',
       'MIT OR Junk': 'MIT OR NOASSERTION',
       'mit OR Junk': 'MIT OR NOASSERTION',
       'Commercial AND Apache-2.0': 'NOASSERTION AND Apache-2.0',

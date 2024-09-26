@@ -6,12 +6,15 @@ This is used by [clearlydefined/service](https://github.com/clearlydefined/servi
 
 ## Install
 
+Package is hosted in GitHub packages
+See [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-packages-from-other-organizations) for details on how to use
+
 ```
-npm install @clearlydefined/spdx
+npm install clearlydefined/spdx
 ```
 
 ```js
-const SPDX = require('@clearlydefined/spdx')
+const SPDX = require('spdx')
 
 SPDX.parse('MIT')
 SPDX.stringify({ license: 'MIT' })
@@ -33,16 +36,8 @@ npm test
 
 ## Release
 * Merge pull request to this repo (make sure that it updates the version of this package - similar to [this pull request](https://github.com/clearlydefined/spdx/pull/12).)
-* Release the new package to npm (the npm login credentials are in the ClearlyDefined Azure keyvault, if you need access or help with this reach out to @nellshamrell)
+* Create a relese on the Repository to run the [publish workflow](.github/workflows/publish-package.yml)
 
-```
-cd spdx
-git checkout master
-git fetch origin
-git rebase origin/master
-npm login
-npm publish
-```
 
-* Update [clearlydefined/service](https://github.com/clearlydefined/service) to use the new version (similar to [this pull request](https://github.com/clearlydefined/service/pull/832))
+* Update [clearlydefined/service](https://github.com/clearlydefined/service) to use the new version
 

@@ -98,6 +98,129 @@ describe('SPDX utility functions', () => {
     })
   })
 
+  it('parses licenseRef with lookup', () => {
+    const data = new Map([
+      ['afpl-9.0', { license: 'LicenseRef-scancode-afpl-9.0' }],
+      ['(afpl-9.0)', { license: 'LicenseRef-scancode-afpl-9.0' }],
+      [
+        '(afpl-9.0 OR Apache-2.0)',
+        {
+          left: { license: 'LicenseRef-scancode-afpl-9.0' },
+          conjunction: 'or',
+          right: { license: 'Apache-2.0' }
+        }
+      ],
+      [
+        'Apache-2.0 AND (afpl-9.0)',
+        {
+          left: { license: 'Apache-2.0' },
+          conjunction: 'and',
+          right: { license: 'LicenseRef-scancode-afpl-9.0' }
+        }
+      ],
+      [
+        'Apache-2.0 AND (afpl-9.0 AND afpl-9.0)',
+        {
+          left: { license: 'Apache-2.0' },
+          conjunction: 'and',
+          right: {
+            left: { license: 'LicenseRef-scancode-afpl-9.0' },
+            conjunction: 'and',
+            right: { license: 'LicenseRef-scancode-afpl-9.0' }
+          }
+        }
+      ],
+      [
+        '(afpl-9.0 AND afpl-9.0) AND Apache-2.0',
+        {
+          right: { license: 'Apache-2.0' },
+          conjunction: 'and',
+          left: {
+            left: { license: 'LicenseRef-scancode-afpl-9.0' },
+            conjunction: 'and',
+            right: { license: 'LicenseRef-scancode-afpl-9.0' }
+          }
+        }
+      ],
+      [
+        'Apache-2.0 AND (afpl-9.0 OR afpl-9.0)',
+        {
+          left: { license: 'Apache-2.0' },
+          conjunction: 'and',
+          right: {
+            left: { license: 'LicenseRef-scancode-afpl-9.0' },
+            conjunction: 'or',
+            right: { license: 'LicenseRef-scancode-afpl-9.0' }
+          }
+        }
+      ],
+      [
+        'MIT AND GPL-3.0',
+        {
+          left: { license: 'MIT' },
+          conjunction: 'and',
+          right: { license: 'GPL-3.0' }
+        }
+      ],
+      [
+        'AFL-1.1 AND afpl-9.0',
+        {
+          left: { license: 'AFL-1.1' },
+          conjunction: 'and',
+          right: { license: 'LicenseRef-scancode-afpl-9.0' }
+        }
+      ],
+      [
+        'afpl-9.0 AND MIT',
+        {
+          left: { license: 'LicenseRef-scancode-afpl-9.0' },
+          conjunction: 'and',
+          right: { license: 'MIT' }
+        }
+      ],
+      [
+        'afpl-9.0 AND activestate-community',
+        {
+          left: { license: 'LicenseRef-scancode-afpl-9.0' },
+          conjunction: 'and',
+          right: { license: 'LicenseRef-scancode-activestate-community' }
+        }
+      ],
+      [
+        'afpl-9.0 AND activestate-community OR ac3filter',
+        {
+          left: {
+            left: { license: 'LicenseRef-scancode-afpl-9.0' },
+            conjunction: 'and',
+            right: { license: 'LicenseRef-scancode-activestate-community' }
+          },
+          conjunction: 'or',
+          right: { license: 'LicenseRef-scancode-ac3filter' }
+        }
+      ],
+      ['INVALID', { noassertion: null }],
+      [
+        'LicenseRef-scancode-afpl-9.0 AND MIT',
+        {
+          left: { license: 'LicenseRef-scancode-afpl-9.0' },
+          conjunction: 'and',
+          right: { license: 'MIT' }
+        }
+      ]
+    ])
+
+    const licenseRefLookup = function (identifier) {
+      if (identifier === 'afpl-9.0') return 'LicenseRef-scancode-afpl-9.0'
+      if (identifier === 'activestate-community') return 'LicenseRef-scancode-activestate-community'
+      if (identifier === 'ac3filter') return 'LicenseRef-scancode-ac3filter'
+      return identifier
+    }
+
+    data.forEach((expected, input) => {
+      expect(SPDX.parse(input, undefined, licenseRefLookup)).to.deep.equal(expected)
+    })
+  })
+
   it('stringifies spdx objects', () => {
     const data = new Map([
       [{ license: 'MIT' }, 'MIT'],

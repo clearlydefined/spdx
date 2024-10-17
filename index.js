@@ -19,14 +19,15 @@ const NOASSERTION = 'NOASSERTION'
  *
  * @param {string} expression SPDX expression
  * @param {Function} licenseVisitor Optional. Bring your own visitor to clean each node
+ * @param {Function} licenseRefLookup Optional. Bring your own lookup to scan licenseRef
  * @returns {object} the AST representing the parsed expression
  */
-function parse(expression, licenseVisitor) {
+function parse(expression, licenseVisitor, licenseRefLookup) {
   // if the expression is already an expression, just return it.
   if (!(typeof expression === 'string')) return expression
   licenseVisitor = licenseVisitor || normalizeSingle
   try {
-    return spdxExpressionParse(expression, { relaxed: true, licenseVisitor })
+    return spdxExpressionParse(expression, { relaxed: true, licenseVisitor, licenseRefLookup })
   } catch (e) {
     return { noassertion: true }
   }

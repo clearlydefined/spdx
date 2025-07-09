@@ -8,6 +8,7 @@
     "url": "git+https://github.com/clearlydefined/spdx.git"
   },
   "main": "index.js",
+  "types": "index.d.ts",
   "keywords": [
     "spdx"
   ],

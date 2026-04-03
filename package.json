@@ -19,6 +19,7 @@
     "test": "nyc mocha \"test.js\" && eslint ."
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "spdx-expression-parse": "github:clearlydefined/spdx-expression-parse.js#fork",
     "spdx-license-ids": "^3.0.21",
     "spdx-license-list": "^6.10.0",

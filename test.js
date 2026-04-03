@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: MIT
 
 const SPDX = require('.')
-const { expect } = require('chai')
+const { describe, it } = require('node:test')
+const assert = require('node:assert/strict')
+const { isDeepStrictEqual } = require('node:util')
 
 describe('SPDX utility functions', () => {
   it('parses spdx expressions', () => {
@@ -94,7 +96,7 @@ describe('SPDX utility functions', () => {
     ])
 
     data.forEach((expected, input) => {
-      expect(SPDX.parse(input)).to.deep.equal(expected)
+      assert.deepStrictEqual(SPDX.parse(input), expected)
     })
   })
 
@@ -217,7 +219,7 @@ describe('SPDX utility functions', () => {
     }
 
     data.forEach((expected, input) => {
-      expect(SPDX.parse(input, undefined, licenseRefLookup)).to.deep.equal(expected)
+      assert.deepStrictEqual(SPDX.parse(input, undefined, licenseRefLookup), expected)
     })
   })
 
@@ -315,7 +317,7 @@ describe('SPDX utility functions', () => {
     ])
 
     data.forEach((expected, input) => {
-      expect(SPDX.stringify(input)).to.equal(expected)
+      assert.strictEqual(SPDX.stringify(input), expected)
     })
   })
 
@@ -336,7 +338,7 @@ describe('SPDX utility functions', () => {
     ])
 
     data.forEach((expected, input) => {
-      expect(SPDX.satisfies(input[0], input[1])).to.eq(expected)
+      assert.strictEqual(SPDX.satisfies(input[0], input[1]), expected)
     })
   })
 
@@ -355,7 +357,7 @@ describe('SPDX utility functions', () => {
     ])
 
     data.forEach((expected, input) => {
-      expect(SPDX.merge(input[0], input[1])).to.eq(expected)
+      assert.strictEqual(SPDX.merge(input[0], input[1]), expected)
     })
   })
 
@@ -377,7 +379,7 @@ describe('SPDX utility functions', () => {
     ])
 
     data.forEach((expected, input) => {
-      expect(SPDX.merge(input[0], input[1], 'AND')).to.eq(expected)
+      assert.strictEqual(SPDX.merge(input[0], input[1], 'AND'), expected)
     })
   })
 
@@ -393,7 +395,10 @@ describe('SPDX utility functions', () => {
     data.forEach(input => {
       const results = SPDX.expand(input[0])
       input[1].forEach(expected => {
-        expect(results).to.deep.include(expected)
+        assert.ok(
+          results.some(r => isDeepStrictEqual(r, expected)),
+          `Expected ${JSON.stringify(results)} to deep-include ${JSON.stringify(expected)}`
+        )
       })
     })
   })
@@ -436,7 +441,7 @@ describe('SPDX utility functions', () => {
     }
     for (let input of Object.keys(data)) {
       if (input === 'null') input = null
-      expect(SPDX.normalize(input)).to.eq(data[input])
+      assert.strictEqual(SPDX.normalize(input), data[input])
     }
   })
 
@@ -452,7 +457,7 @@ describe('SPDX utility functions', () => {
     }
     for (let input of Object.keys(data)) {
       if (input === 'null') input = null
-      expect(SPDX.lookupByName(input)).to.eq(data[input])
+      assert.strictEqual(SPDX.lookupByName(input), data[input])
     }
   })
 })

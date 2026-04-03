@@ -211,7 +211,7 @@ describe('SPDX utility functions', () => {
       ]
     ])
 
-    const licenseRefLookup = function (identifier) {
+    const licenseRefLookup = identifier => {
       if (identifier === 'afpl-9.0') return 'LicenseRef-scancode-afpl-9.0'
       if (identifier === 'activestate-community') return 'LicenseRef-scancode-activestate-community'
       if (identifier === 'ac3filter') return 'LicenseRef-scancode-ac3filter'
@@ -280,7 +280,7 @@ describe('SPDX utility functions', () => {
             right: { license: 'BSD-3-Clause' }
           },
           conjunction: 'and',
-          right: { license: 'MIT' },
+          right: { license: 'MIT' }
         },
         '(BSD-2-Clause OR BSD-3-Clause) AND MIT'
       ],
@@ -389,8 +389,20 @@ describe('SPDX utility functions', () => {
       ['MIT AND GPL-3.0', [['GPL-3.0', 'MIT']]],
       ['MIT OR GPL-3.0', [['MIT'], ['GPL-3.0']]],
       ['MIT OR BSD-2-Clause OR BSD-3-Clause', [['MIT'], ['BSD-2-Clause'], ['BSD-3-Clause']]],
-      ['MIT AND (GPL-3.0 OR BSD-3-Clause)', [['GPL-3.0', 'MIT'], ['BSD-3-Clause', 'MIT']]],
-      ['(MIT OR GPL-3.0) AND ISC', [['ISC', 'MIT'], ['GPL-3.0', 'ISC']]]
+      [
+        'MIT AND (GPL-3.0 OR BSD-3-Clause)',
+        [
+          ['GPL-3.0', 'MIT'],
+          ['BSD-3-Clause', 'MIT']
+        ]
+      ],
+      [
+        '(MIT OR GPL-3.0) AND ISC',
+        [
+          ['ISC', 'MIT'],
+          ['GPL-3.0', 'ISC']
+        ]
+      ]
     ]
     data.forEach(input => {
       const results = SPDX.expand(input[0])
@@ -404,7 +416,7 @@ describe('SPDX utility functions', () => {
   })
 
   it('normalizes spdx expressions', () => {
-    // prettier-ignore
+    // biome-ignore format: keep aligned test data
     const data = {
       'AGPL-1.0': 'AGPL-1.0',
       'apache-2.0': 'Apache-2.0',

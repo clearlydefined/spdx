@@ -4,6 +4,7 @@
 const SPDX = require('.')
 const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
+const { isDeepStrictEqual } = require('node:util')
 
 describe('SPDX utility functions', () => {
   it('parses spdx expressions', () => {
@@ -395,7 +396,7 @@ describe('SPDX utility functions', () => {
       const results = SPDX.expand(input[0])
       input[1].forEach(expected => {
         assert.ok(
-          results.some(r => { try { assert.deepStrictEqual(r, expected); return true } catch (_e) { return false } }),
+          results.some(r => isDeepStrictEqual(r, expected)),
           `Expected ${JSON.stringify(results)} to deep-include ${JSON.stringify(expected)}`
         )
       })

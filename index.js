@@ -28,7 +28,7 @@ function parse(expression, licenseVisitor, licenseRefLookup) {
   licenseVisitor = licenseVisitor || normalizeSingle
   try {
     return spdxExpressionParse(expression, { relaxed: true, licenseVisitor, licenseRefLookup })
-  } catch (e) {
+  } catch (_e) {
     return { noassertion: true }
   }
 }
@@ -42,8 +42,10 @@ function parse(expression, licenseVisitor, licenseRefLookup) {
 function stringify(obj) {
   if (obj.hasOwnProperty('noassertion') || obj.exception === NOASSERTION) return NOASSERTION
   if (obj.license) return `${obj.license}${obj.plus ? '+' : ''}${obj.exception ? ` WITH ${obj.exception}` : ''}`
-  const left = obj.conjunction === 'and' && obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
-  const right = obj.conjunction === 'and' && obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
+  const left =
+    obj.conjunction === 'and' && obj.left.conjunction === 'or' ? `(${stringify(obj.left)})` : stringify(obj.left)
+  const right =
+    obj.conjunction === 'and' && obj.right.conjunction === 'or' ? `(${stringify(obj.right)})` : stringify(obj.right)
   return `${left} ${obj.conjunction.toUpperCase()} ${right}`
 }
 
@@ -55,7 +57,7 @@ function stringify(obj) {
  * @returns {string} the SPDX expression
  */
 function normalize(expression) {
-  if (!expression || !expression.trim()) return null
+  if (!expression?.trim()) return null
   return stringify(parse(expression))
 }
 
@@ -165,7 +167,7 @@ function _stringifyOrAnds(elements) {
   if (elements.length === 0) return ''
   elements = uniqWith(elements, isEqual)
   if (elements.length === 1) return elements[0].join(' AND ')
-  const ands = elements.map(andArray => (andArray.length === 1 ? andArray[0] : '(' + andArray.join(' AND ') + ')'))
+  const ands = elements.map(andArray => (andArray.length === 1 ? andArray[0] : `(${andArray.join(' AND ')})`))
   // sort ANDs alphabetically and simple first. Note ( comes before alphas so trick by replacing with [ for sorting
   return sortBy(ands, entry => entry.replace('(', '[')).join(' OR ')
 }

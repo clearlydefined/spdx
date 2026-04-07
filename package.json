@@ -20,19 +20,21 @@
     "typecheck": "tsc",
     "format": "biome format --write .",
     "lint": "biome lint .",
-    "test": "node --test --experimental-test-coverage && biome check ."
+    "test": "node --test test.mts --experimental-test-coverage && biome check ."
   },
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash": "4.18.1",
     "spdx-expression-parse": "github:clearlydefined/spdx-expression-parse.js#fork",
-    "spdx-license-ids": "^3.0.21",
-    "spdx-license-list": "^6.10.0",
+    "spdx-license-ids": "3.0.23",
+    "spdx-license-list": "6.11.0",
     "spdx-satisfies": "github:clearlydefined/spdx-satisfies.js#parse-override"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.9",
-    "@tsconfig/node24": "^24.0.4",
-    "@types/lodash": "^4.17.24",
-    "typescript": "^6.0.2"
+    "@biomejs/biome": "2.4.10",
+    "@tsconfig/node24": "24.0.4",
+    "@tsconfig/strictest": "2.0.8",
+    "@types/lodash": "4.17.24",
+    "@types/node": "24.12.2",
+    "typescript": "6.0.2"
   }
 }

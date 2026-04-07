@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation and others. Licensed under the MIT license.
 // SPDX-License-Identifier: MIT
 
-const SPDX = require('.')
-const { describe, it } = require('node:test')
-const assert = require('node:assert/strict')
-const { isDeepStrictEqual } = require('node:util')
+import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
+import { isDeepStrictEqual } from 'node:util'
+import type { SpdxExpression } from './index.js'
+import SPDX from './index.js'
 
 describe('SPDX utility functions', () => {
   it('parses spdx expressions', () => {
-    const data = new Map([
+    const data = new Map<string | SpdxExpression, SpdxExpression>([
       [{ license: 'MIT' }, { license: 'MIT' }],
       ['MIT', { license: 'MIT' }],
       ['mit', { license: 'MIT' }],
@@ -211,7 +212,7 @@ describe('SPDX utility functions', () => {
       ]
     ])
 
-    const licenseRefLookup = identifier => {
+    const licenseRefLookup = (identifier: string) => {
       if (identifier === 'afpl-9.0') return 'LicenseRef-scancode-afpl-9.0'
       if (identifier === 'activestate-community') return 'LicenseRef-scancode-activestate-community'
       if (identifier === 'ac3filter') return 'LicenseRef-scancode-ac3filter'
@@ -224,7 +225,7 @@ describe('SPDX utility functions', () => {
   })
 
   it('stringifies spdx objects', () => {
-    const data = new Map([
+    const data = new Map<SpdxExpression, string>([
       [{ license: 'MIT' }, 'MIT'],
       [{ left: { license: 'MIT' }, conjunction: 'and', right: { license: 'Apache-2.0' } }, 'MIT AND Apache-2.0'],
       [{ left: { license: 'MIT' }, conjunction: 'or', right: { license: 'Apache-2.0' } }, 'MIT OR Apache-2.0'],
@@ -322,7 +323,7 @@ describe('SPDX utility functions', () => {
   })
 
   it('satisfies spdx expressions', () => {
-    const data = new Map([
+    const data = new Map<[string, string], boolean>([
       [['MIT', 'MIT'], true],
       [['mit', 'MIT'], true],
       [['MIT', 'mit'], true],
@@ -384,7 +385,7 @@ describe('SPDX utility functions', () => {
   })
 
   it('should expand expressions', () => {
-    const data = [
+    const data: [string, string[][]][] = [
       ['MIT', [['MIT']]],
       ['MIT AND GPL-3.0', [['GPL-3.0', 'MIT']]],
       ['MIT OR GPL-3.0', [['MIT'], ['GPL-3.0']]],
@@ -404,9 +405,9 @@ describe('SPDX utility functions', () => {
         ]
       ]
     ]
-    data.forEach(input => {
-      const results = SPDX.expand(input[0])
-      input[1].forEach(expected => {
+    data.forEach(([expression, expected]) => {
+      const results = SPDX.expand(expression)
+      expected.forEach(expected => {
         assert.ok(
           results.some(r => isDeepStrictEqual(r, expected)),
           `Expected ${JSON.stringify(results)} to deep-include ${JSON.stringify(expected)}`
@@ -451,9 +452,9 @@ describe('SPDX utility functions', () => {
       ' ': null,
       null: null
     }
-    for (let input of Object.keys(data)) {
-      if (input === 'null') input = null
-      assert.strictEqual(SPDX.normalize(input), data[input])
+    for (const key of Object.keys(data)) {
+      const input = key === 'null' ? null : key
+      assert.strictEqual(SPDX.normalize(input), data[key as keyof typeof data])
     }
   })
 
@@ -467,9 +468,9 @@ describe('SPDX utility functions', () => {
       ' ': null,
       null: null
     }
-    for (let input of Object.keys(data)) {
-      if (input === 'null') input = null
-      assert.strictEqual(SPDX.lookupByName(input), data[input])
+    for (const key of Object.keys(data)) {
+      const input = key === 'null' ? null : key
+      assert.strictEqual(SPDX.lookupByName(input), data[key as keyof typeof data])
     }
   })
 })

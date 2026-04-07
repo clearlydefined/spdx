@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation and others. Licensed under the MIT license.
+// SPDX-License-Identifier: MIT
+
 /** Represents a parsed SPDX license expression as an Abstract Syntax Tree (AST) */
 export interface SpdxExpression {
   /** The SPDX license identifier (e.g., 'MIT', 'Apache-2.0') */
@@ -99,10 +102,10 @@ export function lookupByName(licenseName: string | null | undefined): string | n
  * @returns The merged license expression
  */
 export function merge(
-  proposed: string | SpdxExpression,
-  base: string | SpdxExpression,
+  proposed: string | SpdxExpression | null | undefined,
+  base: string | SpdxExpression | null | undefined,
   mode?: MergeMode
-): string | SpdxExpression
+): string | SpdxExpression | null | undefined
 
 /**
  * Expands the given expression into an equivalent array where each member is an array of licenses AND'd together and

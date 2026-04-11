@@ -34,7 +34,7 @@
     "@tsconfig/node24": "24.0.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/lodash": "4.17.24",
-    "@types/node": "24.12.2",
+    "@types/node": "25.6.0",
     "@types/spdx-expression-parse": "4.0.0",
     "@types/spdx-license-ids": "3.0.0",
     "@types/spdx-satisfies": "6.0.0",

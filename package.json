@@ -38,6 +38,6 @@
     "@types/spdx-expression-parse": "4.0.0",
     "@types/spdx-license-ids": "3.0.0",
     "@types/spdx-satisfies": "6.0.0",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   }
 }
